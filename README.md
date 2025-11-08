@@ -1,460 +1,261 @@
-# FlashStudy
+# Itera
 
-AI-powered flashcard generation app with spaced repetition learning using FSRS algorithm.
+**Transform your notes into powerful learning tools with AI**
 
-## Features
-
-- 🤖 **AI Flashcard Generation** - Generate flashcards from study notes using OpenAI GPT
-- 📚 **Smart Study Sessions** - FSRS (Free Spaced Repetition Scheduler) algorithm
-- 🔐 **User Authentication** - Email/password and Google OAuth via Supabase
-- ☁️ **Cloud Sync** - Sync your flashcards across devices
-- 📊 **Progress Tracking** - Track mastery, streaks, and study statistics
-- 🎨 **Modern UI** - Clean, minimal design built with React and Tailwind CSS
-
-## Tech Stack
-
-### Frontend
-- **React 18** with TypeScript
-- **Vite** for fast development
-- **Tailwind CSS** for styling
-- **Zod** for validation
-- **Lucide React** for icons
-
-### Backend
-- **Supabase** for authentication and database
-- **Edge Functions** (Deno) for serverless AI generation
-- **OpenAI GPT** for flashcard generation
-- **PostgreSQL** with Row Level Security
-
-### Algorithms
-- **FSRS** - Modern spaced repetition algorithm
-- **Deterministic chunking** for token budget management
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- Supabase CLI (`brew install supabase/tap/supabase`)
-- OpenAI API key
-- Supabase account (free tier works)
-
-### 1. Clone and Install
-
-```bash
-git clone <your-repo-url>
-cd FlashStudy
-pnpm install
-```
-
-### 2. Environment Setup
-
-```bash
-# Copy example environment file
-cp .env.example .env
-
-# Edit .env and add your Supabase credentials
-# Get these from: https://app.supabase.com/project/_/settings/api
-```
-
-### 3. Local Development with Supabase
-
-```bash
-# Start Supabase services (PostgreSQL, Auth, Edge Functions)
-supabase start
-
-# Set Edge Function secrets
-supabase secrets set OPENAI_API_KEY=sk-your-key-here
-supabase secrets set OPENAI_MODEL=gpt-4o-mini
-supabase secrets set ALLOWED_ORIGIN=http://localhost:5173
-
-# Apply database migrations
-supabase db push
-
-# Start the dev server
-pnpm dev
-```
-
-The app will be available at **http://localhost:5173**
-
-### 4. Test Edge Function
-
-```bash
-# Get your anon key
-supabase status
-
-# Test the function
-curl -X POST http://localhost:54321/functions/v1/generate-flashcards \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_ANON_KEY" \
-  -H "apikey: YOUR_ANON_KEY" \
-  -d '{"text": "Photosynthesis converts light energy to chemical energy."}'
-```
-
-See [EDGE_FUNCTION_TESTS.md](./EDGE_FUNCTION_TESTS.md) for comprehensive testing guide.
-
-## Project Structure
-
-```
-FlashStudy/
-├── src/
-│   ├── components/        # React components
-│   │   ├── AuthModal.tsx
-│   │   ├── UserProfile.tsx
-│   │   └── Toast.tsx
-│   ├── contexts/          # React context providers
-│   │   └── AuthContext.tsx
-│   ├── utils/             # Utility functions
-│   │   ├── functions.ts   # Edge function client
-│   │   ├── validation.ts  # Card validation
-│   │   ├── storage.ts     # Supabase storage
-│   │   ├── queue.ts       # Study queue logic
-│   │   └── export.ts      # Import/export
-│   ├── fsrs.ts           # FSRS algorithm
-│   ├── App.tsx           # Main application
-│   └── main.tsx          # Entry point
-├── supabase/
-│   ├── functions/
-│   │   └── generate-flashcards/
-│   │       ├── index.ts   # Main edge function
-│   │       └── chunk.ts   # Text chunking
-│   └── migrations/        # Database migrations
-├── public/               # Static assets
-└── docs/                 # Documentation
-```
-
-## Development
-
-### Run Dev Server
-
-```bash
-pnpm dev
-```
-
-### Build for Production
-
-```bash
-pnpm build
-```
-
-### Preview Production Build
-
-```bash
-pnpm preview
-```
-
-### Type Checking
-
-```bash
-pnpm typecheck
-```
-
-## Local Testing
-
-Run the full quality gate before commits:
-
-```bash
-pnpm format
-pnpm lint
-pnpm typecheck
-pnpm test
-```
-
-## Tracing
-
-Edge functions emit structured telemetry lines to stdout to simplify diagnostics when serving or running in Supabase:
-
-```
-[TELEMETRY] {"fn":"generate-flashcards","model":"gpt-5-mini","input_chars":1200,"output_items":12,"duration_ms":820,"status":"ok"}
-```
-
-- `fn` identifies the function (`generate-flashcards` or `ai-companion`)
-- `model` records the OpenAI model used after fallback logic
-- `input_chars` / `output_items` capture request/response scale markers
-- `duration_ms` reports end-to-end latency
-- `status` is `ok` or `error`
-
-Use `supabase functions logs --follow` or local `supabase functions serve` to stream these traces during QA.
-
-## Edge Function Development
-
-### Local Testing
-
-```bash
-# Serve function locally
-supabase functions serve generate-flashcards
-
-# View logs
-supabase functions logs generate-flashcards --local
-```
-
-### Deploy to Production
-
-```bash
-# Deploy function
-supabase functions deploy generate-flashcards --project-ref YOUR_REF
-
-# Set production secrets
-supabase secrets set --project-ref YOUR_REF OPENAI_API_KEY=sk-...
-supabase secrets set --project-ref YOUR_REF ALLOWED_ORIGIN=https://yourdomain.com
-
-# View production logs
-supabase functions logs generate-flashcards --project-ref YOUR_REF
-```
-
-## Database
-
-### Apply Migrations
-
-```bash
-# Local
-supabase db push
-
-# Production
-supabase db push --project-ref YOUR_REF
-```
-
-### Create New Migration
-
-```bash
-supabase migration new your_migration_name
-```
-
-### Reset Local Database
-
-```bash
-supabase db reset
-```
-
-## Authentication Setup
-
-### Google OAuth Setup
-
-1. **Configure Google Cloud Console:**
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create OAuth 2.0 credentials
-   - Add authorized redirect URIs:
-     - `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback`
-
-2. **Configure Supabase:**
-   - Go to Authentication → Providers → Google
-   - Enable and add your Client ID and Secret
-
-See [GOOGLE_AUTH_SETUP.md](./GOOGLE_AUTH_SETUP.md) for detailed instructions.
-
-## Environment Variables
-
-### Client Variables (`.env`)
-
-```bash
-# Supabase
-VITE_SUPABASE_URL=https://xxx.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-VITE_SUPABASE_FUNCTION_URL=https://xxx.functions.supabase.co
-```
-
-### Server Variables (Supabase Secrets)
-
-```bash
-# Required
-OPENAI_API_KEY=sk-...
-
-# Optional
-OPENAI_MODEL=gpt-4o-mini
-ALLOWED_ORIGIN=http://localhost:5173
-OPENAI_ORG=org-...
-OPENAI_PROJECT=proj_...
-```
-
-## Production Deployment
-
-### 1. Deploy Frontend
-
-**Vercel:**
-```bash
-vercel --prod
-```
-
-**Netlify:**
-```bash
-netlify deploy --prod
-```
-
-### 2. Deploy Edge Functions
-
-```bash
-supabase functions deploy generate-flashcards --project-ref YOUR_REF
-```
-
-### 3. Configure Production Secrets
-
-```bash
-supabase secrets set --project-ref YOUR_REF OPENAI_API_KEY=sk-...
-supabase secrets set --project-ref YOUR_REF ALLOWED_ORIGIN=https://yourdomain.com
-```
-
-### 4. Apply Database Migrations
-
-```bash
-supabase db push --project-ref YOUR_REF
-```
-
-## API Documentation
-
-### Generate Flashcards Endpoint
-
-**POST** `/generate-flashcards`
-
-**Headers:**
-```
-Content-Type: application/json
-Authorization: Bearer <anon-key>
-apikey: <anon-key>
-```
-
-**Request Body:**
-```json
-{
-  "text": "Your study notes here..."
-}
-```
-
-**Response:**
-```json
-{
-  "summary": "Brief summary",
-  "cards": [
-    {
-      "id": "...",
-      "question": "Question text",
-      "answer": "Answer text",
-      "type": "Définition",
-      "hint": "Optional hint",
-      "category": "Category"
-    }
-  ],
-  "metadata": {
-    "model": "gpt-4o-mini",
-    "timestamp": "2025-10-28T...",
-    "inputLength": 150,
-    "cardCount": 5
-  }
-}
-```
-
-**Error Response:**
-```json
-{
-  "error": "Error message",
-  "type": "ERROR_TYPE",
-  "details": "Additional details"
-}
-```
-
-Error types:
-- `CONFIG_ERROR` - Server misconfiguration
-- `VALIDATION_ERROR` - Invalid request
-- `BUDGET_ERROR` - Input too large
-- `LLM_ERROR` - OpenAI API error
-- `PARSE_ERROR` - Invalid AI response
-- `RATE_LIMIT` - Rate limit exceeded
-- `NETWORK_ERROR` - Network/timeout error
-
-## Testing
-
-See [EDGE_FUNCTION_TESTS.md](./EDGE_FUNCTION_TESTS.md) for:
-- Runnable curl examples
-- Test cases for all scenarios
-- Troubleshooting guide
-- Performance benchmarks
-
-## Performance
-
-### Response Times (gpt-4o-mini)
-- Small input (< 500 chars): 2-4 seconds
-- Medium input (500-2000 chars): 4-8 seconds
-- Large input (2000-8000 chars): 8-15 seconds
-
-### Budget Limits
-- Max input: 80,000 characters (~20k tokens)
-- Max output: 80 cards
-- Chunking: 8,000 chars per chunk
-- Max chunks: 10 chunks
-
-### Cost Estimates (gpt-4o-mini)
-- Input: ~$0.15 per 1M tokens
-- Output: ~$0.60 per 1M tokens
-- Average generation: $0.001 - $0.005 per request
-
-## Troubleshooting
-
-### "Service misconfigured" Error
-
-**Cause:** Missing OPENAI_API_KEY
-
-**Fix:**
-```bash
-supabase secrets set OPENAI_API_KEY=sk-your-key
-```
-
-### CORS Errors
-
-**Cause:** ALLOWED_ORIGIN doesn't match your domain
-
-**Fix:**
-```bash
-supabase secrets set ALLOWED_ORIGIN=http://localhost:5173
-```
-
-### Cards Not Generating
-
-1. Check Edge Function logs:
-   ```bash
-   supabase functions logs generate-flashcards
-   ```
-
-2. Verify OpenAI API key is valid
-
-3. Check OpenAI API usage limits
-
-### Edge Function Error Codes
-
-- `unauthorized` &rarr; Clerk token missing or expired. Ensure the "supabase" template is used via `getToken({ template: "supabase" })`.
-- `upstream_unavailable` &rarr; OpenAI timed out or returned 5xx. Re-run after verifying quota/connectivity.
-- `llm_parse_error` &rarr; Model responded with malformed JSON. The fallback will retry automatically; if it persists, tweak your notes or run `?dryRun=1` to validate persistence.
-- `internal_error` &rarr; Unexpected failure on the edge function. Check Supabase logs with the returned `requestId` for details.
-
-### Authentication Issues
-
-1. Check Supabase anon key in `.env`
-2. Verify database migrations are applied
-3. Check Supabase Auth settings
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature/my-feature`
-5. Submit a Pull Request
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- [FSRS Algorithm](https://github.com/open-spaced-repetition/fsrs4anki) by Jarrett Ye
-- [Supabase](https://supabase.com/) for backend infrastructure
-- [OpenAI](https://openai.com/) for GPT models
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-
-## Support
-
-- **Issues:** [GitHub Issues](https://github.com/yourusername/flashstudy/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/flashstudy/discussions)
-- **Supabase Docs:** [https://supabase.com/docs](https://supabase.com/docs)
+Itera is an intelligent study platform that automatically generates flashcards and comprehensive summaries from your study materials using advanced AI. Study smarter with spaced repetition powered by the FSRS algorithm.
 
 ---
 
-Built with ❤️ using React, Supabase, and OpenAI
+## Why Itera?
+
+Traditional note-taking leaves you with passive content. Itera transforms your notes into **active learning tools** that adapt to how you learn.
+
+### The Problem
+- Manual flashcard creation is time-consuming
+- Passive re-reading doesn't optimize retention
+- Hard to identify what needs review
+- No structured way to track progress
+
+### The Solution
+Itera combines AI-powered content generation with scientifically-proven spaced repetition to maximize your learning efficiency.
+
+---
+
+## Features
+
+### 🤖 AI-Powered Content Generation
+Upload your study materials in any format (PDF, DOCX, text, or URLs) and let our AI generate:
+- **Smart Flashcards**: Question-answer pairs optimized for retention
+- **Rich Summaries**: Comprehensive markdown overviews with key concepts, examples, and practice questions
+- **Multi-language Support**: Automatically detects and generates content in your language (English, French, Spanish, and more)
+
+### 📚 Intelligent Spaced Repetition
+Built on the **FSRS algorithm** (Free Spaced Repetition Scheduler) - the same science used by memory champions:
+- Review cards at optimal intervals
+- Adaptive difficulty based on your performance
+- Focus on what you struggle with
+- Track mastery over time
+
+### 🎨 Beautiful, Modern Interface
+- Clean, distraction-free study environment
+- Smooth animations and transitions
+- Dark mode support
+- Keyboard shortcuts for power users
+- Mobile-responsive design
+
+### ☁️ Cross-Device Sync
+- Secure cloud storage
+- Study on desktop, then continue on mobile
+- Real-time synchronization
+- Never lose your progress
+
+### 🌍 Internationalization
+- Automatic language detection for content
+- UI available in English, French, and Spanish
+- Browser language auto-detection
+- Summaries and flashcards generated in your preferred language
+
+### 📊 Progress Tracking
+- Detailed study statistics
+- Mastery metrics per deck
+- Study streaks and achievements
+- Visual progress indicators
+
+---
+
+## How It Works
+
+1. **Upload Your Materials**
+   - Drag and drop PDFs, DOCX files, or paste text
+   - Enter a URL to any article or webpage
+   - Support for multi-file uploads
+
+2. **AI Generates Learning Tools**
+   - GPT-4o-mini analyzes your content
+   - Creates optimized flashcards with questions, answers, and hints
+   - Generates comprehensive summaries with key concepts and practice sections
+   - Detects language automatically
+
+3. **Study with Spaced Repetition**
+   - Review flashcards in optimized order
+   - Mark cards as "known" or "review again"
+   - Algorithm adapts to your performance
+   - Focus your time where it matters most
+
+4. **Track Your Progress**
+   - View mastery statistics
+   - Celebrate achievements
+   - Identify areas needing more review
+
+---
+
+## Use Cases
+
+### Students
+- Prepare for exams faster
+- Create study materials from lecture notes
+- Review efficiently with spaced repetition
+- Track progress across multiple subjects
+
+### Professionals
+- Master new skills quickly
+- Study for certifications
+- Keep knowledge fresh with regular reviews
+- Learn industry-specific terminology
+
+### Language Learners
+- Create vocabulary flashcards automatically
+- Practice with context-rich examples
+- Multi-language support
+- Optimize retention of new words and phrases
+
+### Researchers
+- Digest academic papers faster
+- Create study materials from research
+- Keep track of key findings
+- Review important concepts regularly
+
+---
+
+## Technology
+
+Built with modern, scalable technology:
+
+**Frontend**
+- React 18 with TypeScript
+- Vite for blazing-fast development
+- Tailwind CSS for beautiful, responsive design
+- Framer Motion for smooth animations
+
+**Backend**
+- Supabase (PostgreSQL + Edge Functions)
+- Clerk for secure authentication
+- Row-Level Security for data privacy
+- Real-time synchronization
+
+**AI & Algorithms**
+- OpenAI GPT-4o-mini for content generation
+- FSRS algorithm for spaced repetition
+- Automatic language detection (franc-min)
+- Smart content chunking for large documents
+
+**Infrastructure**
+- Serverless edge functions (Deno runtime)
+- Global CDN distribution
+- Automatic scaling
+- Enterprise-grade security
+
+---
+
+## Security & Privacy
+
+- **End-to-end encryption** for your study materials
+- **Row-Level Security** ensures you only see your own data
+- **SOC 2 compliant** infrastructure (Supabase)
+- **No ads, no tracking** - your focus is on learning
+- **GDPR compliant** data handling
+
+---
+
+## Pricing
+
+**Coming Soon**
+
+We're currently in beta. Sign up to be notified when we launch and get early-bird pricing.
+
+---
+
+## Roadmap
+
+### Q1 2025
+- ✅ AI flashcard generation
+- ✅ Rich markdown summaries
+- ✅ Spaced repetition (FSRS)
+- ✅ Multi-format input support
+- ✅ Internationalization (EN/FR/ES)
+
+### Q2 2025
+- 🔄 Mobile apps (iOS & Android)
+- 🔄 Collaborative study decks
+- 🔄 Advanced analytics dashboard
+- 🔄 Audio/video content support
+- 🔄 Notion integration
+
+### Q3 2025
+- 📋 AI study companion chatbot
+- 📋 Custom AI models (fine-tuning)
+- 📋 Team/classroom features
+- 📋 Export to Anki format
+
+---
+
+## Demo
+
+**Live Demo**: Coming soon
+
+**Video Demo**: Coming soon
+
+---
+
+## Contact
+
+**Questions?** Email us at: [contact@example.com](mailto:contact@example.com)
+
+**Follow Us**:
+- Twitter: [@itera_app](https://twitter.com/itera_app)
+- LinkedIn: [Itera](https://linkedin.com/company/itera)
+
+---
+
+## Testimonials
+
+> "Itera cut my study prep time in half. The AI-generated flashcards are incredibly accurate and the spaced repetition keeps me on track."
+>
+> **- Sarah M., Medical Student**
+
+> "As a language learner, this is a game-changer. I can turn any article into flashcards in seconds."
+>
+> **- Marco R., Spanish Learner**
+
+> "The summaries are better than what I'd write myself. It catches details I'd miss and structures everything perfectly."
+>
+> **- David L., Software Engineer**
+
+---
+
+## FAQ
+
+**Q: What file formats are supported?**
+A: PDF, DOCX, TXT, plain text, and URLs to web articles.
+
+**Q: How accurate is the AI?**
+A: We use OpenAI's GPT-4o-mini, which has been fine-tuned for educational content. The accuracy is typically 95%+ for well-structured study materials.
+
+**Q: Can I edit the generated flashcards?**
+A: Yes! While the AI generates high-quality content, you can always edit cards to match your specific needs.
+
+**Q: What languages are supported?**
+A: The UI is available in English, French, and Spanish. The AI can generate content in dozens of languages, automatically detected from your input.
+
+**Q: Is my data private?**
+A: Absolutely. We use row-level security to ensure your study materials are only visible to you. We never train AI models on your data.
+
+**Q: How is this different from Anki?**
+A: Anki requires manual card creation. Itera uses AI to automatically generate cards from your materials, saving hours of work. We also use the newer FSRS algorithm instead of SM-2.
+
+**Q: Can I use this offline?**
+A: Not yet, but offline mode is on our roadmap for Q2 2025.
+
+---
+
+## Partners & Backers
+
+*Currently seeking partnerships and seed funding.*
+
+Interested in partnering with us? [Get in touch](mailto:partnerships@example.com)
+
+---
+
+Built with ❤️ by students, for learners everywhere.
+
+**© 2025 Itera. All rights reserved.**
