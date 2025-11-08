@@ -142,14 +142,34 @@ function nextStability(
 }
 
 function retrievability(elapsedDays: number, stability: number): number {
+  // Prevent division by zero
+  if (stability <= 0) {
+    console.warn('[FSRS] Invalid stability value:', stability, '- using default 1');
+    stability = 1;
+  }
   return Math.pow(1 + elapsedDays / (9 * stability), -1);
 }
 
 function nextInterval(stability: number): number {
+  const param16 = getParam(16);
+  const param17 = getParam(17);
+
+  // Prevent division by zero or invalid params
+  if (param16 <= 0 || param17 <= 0) {
+    console.warn('[FSRS] Invalid parameters for interval calculation:', { param16, param17 }, '- using fallback 1-day interval');
+    return 1;
+  }
+
   const interval = Math.round(
-    (stability / getParam(17)) *
-    (Math.pow(FSRS_PARAMS.requestRetention, 1 / getParam(16)) - 1)
+    (stability / param17) *
+    (Math.pow(FSRS_PARAMS.requestRetention, 1 / param16) - 1)
   );
+
+  // Validate computed interval is finite
+  if (!Number.isFinite(interval) || interval < 0) {
+    console.warn('[FSRS] Computed invalid interval:', interval, '- using fallback 1-day interval');
+    return 1;
+  }
 
   return Math.max(1, Math.min(FSRS_PARAMS.maximumInterval, interval));
 }

@@ -256,7 +256,21 @@ async function handleRequest(req: Request, ctx: { requestId: string }): Promise<
       p_user_id: userId,
     });
 
-    if (!usageError && usageData) {
+    // Fail closed: If budget check fails, reject the request
+    if (usageError) {
+      console.error('daily_budget_check_failed', {
+        requestId: ctx.requestId,
+        userId,
+        error: usageError.message,
+      });
+      return errorResponse(503, {
+        code: 'budget_check_unavailable',
+        error: 'Token usage tracking is temporarily unavailable. Please try again later.',
+        requestId: ctx.requestId,
+      });
+    }
+
+    if (usageData) {
       const dailyTokens = usageData.daily_tokens || 0;
       if (dailyTokens >= DAILY_TOKEN_BUDGET) {
         console.warn('daily_budget_exceeded', {
@@ -291,12 +305,43 @@ async function handleRequest(req: Request, ctx: { requestId: string }): Promise<
 
         // Extract text from uploaded files
         const files = formData.getAll('files');
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+        const ALLOWED_EXTENSIONS = ['.pdf', '.docx', '.txt', '.md'];
+
         for (const file of files) {
-          if (file instanceof File) {
-            const buffer = await file.arrayBuffer();
-            try {
-              const text = await extractFile(file.name, buffer);
-              extractedTexts.push(text);
+          if (!(file instanceof File)) {
+            return errorResponse(400, {
+              code: 'invalid_file',
+              error: 'Invalid file upload. Expected File object.',
+              requestId: ctx.requestId,
+            });
+          }
+
+          // Validate file size
+          if (file.size > MAX_FILE_SIZE) {
+            return errorResponse(413, {
+              code: 'file_too_large',
+              error: `File ${file.name} exceeds maximum size of 10MB`,
+              detail: `File size: ${(file.size / 1024 / 1024).toFixed(2)}MB`,
+              requestId: ctx.requestId,
+            });
+          }
+
+          // Validate file extension
+          const fileExt = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+          if (!ALLOWED_EXTENSIONS.includes(fileExt)) {
+            return errorResponse(415, {
+              code: 'unsupported_file_type',
+              error: `File type ${fileExt} is not supported`,
+              detail: `Supported types: ${ALLOWED_EXTENSIONS.join(', ')}`,
+              requestId: ctx.requestId,
+            });
+          }
+
+          const buffer = await file.arrayBuffer();
+          try {
+            const text = await extractFile(file.name, buffer);
+            extractedTexts.push(text);
               console.info('file_extracted', {
                 requestId: ctx.requestId,
                 filename: file.name,

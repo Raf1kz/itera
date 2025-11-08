@@ -12,10 +12,32 @@ export function isAdmin(userId?: string | null): boolean {
   if (!userId) return false;
 
   const env = import.meta.env['VITE_ADMIN_USER_IDS'] ?? '';
-  const adminIds = env
-    .split(',')
-    .map((s: string) => s.trim())
-    .filter(Boolean);
+
+  // Warn if admin IDs not configured
+  if (!env || env.trim() === '') {
+    console.error('[roles] VITE_ADMIN_USER_IDS environment variable is not set or empty');
+    return false;
+  }
+
+  const rawAdminIds = env.split(',').map((s: string) => s.trim());
+  const adminIds: string[] = [];
+
+  // Validate each admin ID format
+  for (const id of rawAdminIds) {
+    if (!id) continue;
+
+    if (!id.startsWith('user_')) {
+      console.warn(`[roles] Invalid admin ID format: "${id}" - must start with "user_"`);
+      continue;
+    }
+
+    adminIds.push(id);
+  }
+
+  if (adminIds.length === 0) {
+    console.error('[roles] No valid admin IDs found after validation');
+    return false;
+  }
 
   const isUserAdmin = adminIds.includes(userId);
 
@@ -24,7 +46,8 @@ export function isAdmin(userId?: string | null): boolean {
     console.log('[roles] Admin check:', {
       userId,
       isAdmin: isUserAdmin,
-      adminCount: adminIds.length,
+      validAdminCount: adminIds.length,
+      totalConfigured: rawAdminIds.length,
     });
   }
 
