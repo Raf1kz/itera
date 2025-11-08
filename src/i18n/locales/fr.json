@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "Itera",
+    "tagline": "Assistant d'Étude Alimenté par l'IA"
+  },
+  "nav": {
+    "generate": "Générer",
+    "flashcards": "Cartes Mémoire",
+    "summaries": "Résumés",
+    "notebook": "Cahier",
+    "dashboard": "Tableau de bord",
+    "study": "Étudier",
+    "soon": "Bientôt",
+    "expandSidebar": "Développer la barre latérale",
+    "collapseSidebar": "Réduire la barre latérale"
+  },
+  "auth": {
+    "signIn": "Se Connecter",
+    "signedIn": "Connecté",
+    "manageAccount": "Gérer le compte",
+    "saveProgress": "Sauvegarder la progression et synchroniser partout"
+  },
+  "common": {
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "confirm": "Confirmer",
+    "success": "Succès",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "backToDecks": "Retour aux Paquets",
+    "backToSummaries": "Retour aux Résumés",
+    "getStarted": "Commencer"
+  },
+  "generate": {
+    "title": "Générer du Contenu",
+    "subtitle": "Cartes mémoire et résumés alimentés par l'IA",
+    "deckNameLabel": "Nom du Paquet",
+    "deckNamePlaceholder": "ex: Biologie 101",
+    "optionsTitle": "Options",
+    "targetCards": "Nombre de Cartes",
+    "generateSummary": "Générer un Résumé",
+    "detailLevel": "Niveau de Détail",
+    "brief": "Bref",
+    "standard": "Standard",
+    "comprehensive": "Complet",
+    "inputMethods": "Choisissez votre méthode de saisie",
+    "pasteText": "Coller du Texte",
+    "uploadFiles": "Télécharger des Fichiers",
+    "enterUrl": "Entrer une URL",
+    "textPlaceholder": "Collez vos notes d'étude ici...",
+    "urlPlaceholder": "https://exemple.com/article",
+    "generateButton": "Générer",
+    "generating": "Génération en cours..."
+  },
+  "decks": {
+    "title": "Cartes Mémoire",
+    "subtitle": "cartes organisées en paquets",
+    "card": "carte",
+    "cards": "cartes",
+    "allCards": "Toutes les Cartes",
+    "studyAll": "Tout Étudier",
+    "studyDeck": "Étudier",
+    "emptyTitle": "Aucune carte mémoire",
+    "emptyDescription": "Générez vos premières cartes mémoire en téléchargeant des notes ou en saisissant du contenu. Notre IA créera de puissants supports d'étude pour vous aider à apprendre.",
+    "emptyAction": "Générer des Cartes Mémoire",
+    "select": "Sélectionner",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "selected": "Sélectionné",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette carte ?",
+    "cardDeleted": "Carte supprimée avec succès"
+  },
+  "flashcardStudy": {
+    "card": "Carte",
+    "of": "sur",
+    "finalCard": "Dernière carte !",
+    "known": "connues",
+    "learning": "en cours",
+    "flipHint": "Cliquez ou appuyez sur Espace pour révéler",
+    "flipBackHint": "Cliquez pour revoir la question",
+    "reviewAgain": "Revoir",
+    "gotIt": "Compris",
+    "keyboardHints": "Utilisez",
+    "toFlip": "pour retourner",
+    "toNavigate": "pour naviguer",
+    "noCards": "Aucune carte mémoire disponible",
+    "cardNotFound": "Carte non trouvée"
+  },
+  "deckCompletion": {
+    "title": "Paquet Terminé !",
+    "subtitle": "Excellent travail pour avoir terminé cette session d'étude",
+    "totalCards": "Cartes",
+    "mastered": "Maîtrisées",
+    "accuracy": "Précision",
+    "highAchiever": "Haute Performance",
+    "accuracyBadge": "de précision !",
+    "backToFlashcards": "Retour aux Cartes Mémoire",
+    "tip": "Révisez à nouveau demain pour renforcer votre mémoire"
+  },
+  "summaries": {
+    "title": "Résumés",
+    "subtitle": "résumés générés par l'IA",
+    "summary": "résumé",
+    "summaries_plural": "résumés",
+    "words": "mots",
+    "emptyTitle": "Aucun résumé",
+    "emptyDescription": "Générez votre premier résumé en téléchargeant des notes. Notre IA créera un aperçu concis pour vous aider à revoir rapidement les concepts clés.",
+    "emptyAction": "Générer du Contenu"
+  },
+  "toast": {
+    "studyMaterialsSaved": "Supports d'étude enregistrés avec succès !",
+    "error": "Une erreur s'est produite",
+    "tryAgain": "Veuillez réessayer"
+  },
+  "fileUpload": {
+    "dropFiles": "Déposez les fichiers ici ou cliquez pour parcourir",
+    "supportedFormats": "Formats supportés : PDF, DOCX, TXT",
+    "maxSize": "Max 10 Mo par fichier",
+    "extracting": "Extraction...",
+    "ready": "Prêt",
+    "failed": "Échec",
+    "processing": "Traitement des fichiers..."
+  },
+  "welcome": {
+    "title": "Bienvenue sur Itera",
+    "subtitle": "Transformez vos notes en outils d'apprentissage puissants",
+    "feature1Title": "Cartes Intelligentes",
+    "feature1Description": "Cartes générées par l'IA avec répétition espacée",
+    "feature2Title": "Résumés Riches",
+    "feature2Description": "Aperçus markdown complets",
+    "feature3Title": "Multi-Format",
+    "feature3Description": "Traitez des PDFs, docs, URLs et texte",
+    "getStarted": "Commencer"
+  }
+}

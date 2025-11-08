@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "Itera",
+    "tagline": "AI-Powered Study Companion"
+  },
+  "nav": {
+    "generate": "Generate",
+    "flashcards": "Flashcards",
+    "summaries": "Summaries",
+    "notebook": "Notebook",
+    "dashboard": "Dashboard",
+    "study": "Study",
+    "soon": "Soon",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signedIn": "Signed in",
+    "manageAccount": "Manage account",
+    "saveProgress": "Save progress & sync everywhere"
+  },
+  "common": {
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "retry": "Retry",
+    "backToDecks": "Back to Decks",
+    "backToSummaries": "Back to Summaries",
+    "getStarted": "Get Started"
+  },
+  "generate": {
+    "title": "Generate Content",
+    "subtitle": "AI-powered flashcards and summaries",
+    "deckNameLabel": "Deck Name",
+    "deckNamePlaceholder": "e.g., Biology 101",
+    "optionsTitle": "Options",
+    "targetCards": "Target Cards",
+    "generateSummary": "Generate Summary",
+    "detailLevel": "Detail Level",
+    "brief": "Brief",
+    "standard": "Standard",
+    "comprehensive": "Comprehensive",
+    "inputMethods": "Choose your input method",
+    "pasteText": "Paste Text",
+    "uploadFiles": "Upload Files",
+    "enterUrl": "Enter URL",
+    "textPlaceholder": "Paste your study notes here...",
+    "urlPlaceholder": "https://example.com/article",
+    "generateButton": "Generate",
+    "generating": "Generating..."
+  },
+  "decks": {
+    "title": "Flashcards",
+    "subtitle": "cards organized in decks",
+    "card": "card",
+    "cards": "cards",
+    "allCards": "All Cards",
+    "studyAll": "Study All",
+    "studyDeck": "Study",
+    "emptyTitle": "No flashcards yet",
+    "emptyDescription": "Generate your first flashcards by uploading notes or typing content. Our AI will create powerful study materials to help you learn.",
+    "emptyAction": "Generate Flashcards",
+    "select": "Select",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "selected": "Selected",
+    "deleteConfirm": "Are you sure you want to delete this card?",
+    "cardDeleted": "Card deleted successfully"
+  },
+  "flashcardStudy": {
+    "card": "Card",
+    "of": "of",
+    "finalCard": "Final card!",
+    "known": "known",
+    "learning": "learning",
+    "flipHint": "Click or press Space to reveal",
+    "flipBackHint": "Click to see question again",
+    "reviewAgain": "Review Again",
+    "gotIt": "Got It",
+    "keyboardHints": "Use",
+    "toFlip": "to flip",
+    "toNavigate": "to navigate",
+    "noCards": "No flashcards available",
+    "cardNotFound": "Card not found"
+  },
+  "deckCompletion": {
+    "title": "Deck Completed!",
+    "subtitle": "Great work on finishing this study session",
+    "totalCards": "Cards",
+    "mastered": "Mastered",
+    "accuracy": "Accuracy",
+    "highAchiever": "High Achiever",
+    "accuracyBadge": "accuracy!",
+    "backToFlashcards": "Back to Flashcards",
+    "tip": "Review again tomorrow to strengthen your memory"
+  },
+  "summaries": {
+    "title": "Summaries",
+    "subtitle": "AI-generated summaries",
+    "summary": "summary",
+    "summaries_plural": "summaries",
+    "words": "words",
+    "emptyTitle": "No summaries yet",
+    "emptyDescription": "Generate your first summary by uploading notes. Our AI will create a concise overview to help you review key concepts quickly.",
+    "emptyAction": "Generate Content"
+  },
+  "toast": {
+    "studyMaterialsSaved": "Study materials saved successfully!",
+    "error": "An error occurred",
+    "tryAgain": "Please try again"
+  },
+  "fileUpload": {
+    "dropFiles": "Drop files here or click to browse",
+    "supportedFormats": "Supported: PDF, DOCX, TXT",
+    "maxSize": "Max 10MB per file",
+    "extracting": "Extracting...",
+    "ready": "Ready",
+    "failed": "Failed",
+    "processing": "Processing files..."
+  },
+  "welcome": {
+    "title": "Welcome to Itera",
+    "subtitle": "Transform your notes into powerful learning tools",
+    "feature1Title": "Smart Flashcards",
+    "feature1Description": "AI-generated cards with spaced repetition",
+    "feature2Title": "Rich Summaries",
+    "feature2Description": "Comprehensive markdown overviews",
+    "feature3Title": "Multi-Format",
+    "feature3Description": "Process PDFs, docs, URLs, and text",
+    "getStarted": "Get Started"
+  }
+}

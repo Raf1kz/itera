@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES2022", "DOM"],
+    "outDir": ".tests-build",
+    "noEmit": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": false,
+    "baseUrl": ".",
+    "paths": {
+      "vitest": ["./tests/types/vitest"],
+      "supabase/functions/_shared/zod.ts": ["./tests/mocks/zod.ts"]
+    },
+    "types": []
+  },
+  "include": ["tests/**/*.ts", "src/**/*.ts", "src/**/*.tsx", "tests/types/*.d.ts"]
+}

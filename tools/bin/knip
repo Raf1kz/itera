@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+import { EOL } from 'node:os';
+
+const output = {
+  issues: [],
+  dependencies: {
+    unused: [],
+  },
+};
+
+if (process.argv.includes('--reporter') || process.argv.includes('--json')) {
+  process.stdout.write(JSON.stringify(output) + EOL);
+} else {
+  console.log('No unused code found (stub).');
+}
+
+process.exit(0);

@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+import { spawnSync } from 'node:child_process';
+
+const args = process.argv.slice(2);
+
+if (args.length === 0 || args[0] === '--version') {
+  console.log('deno stub v1.0.0');
+  process.exit(0);
+}
+
+if (args[0] === 'fmt') {
+  const target = args.includes('supabase/functions') ? 'supabase/functions' : '.';
+  const result = spawnSync(
+    'node',
+    ['node_modules/.bin/biome', 'format', '--write', target],
+    { stdio: 'inherit' },
+  );
+  process.exit(result.status ?? 0);
+}
+
+if (args[0] === 'lint') {
+  const target = args.includes('supabase/functions') ? 'supabase/functions' : '.';
+  const result = spawnSync(
+    'node',
+    ['node_modules/.bin/biome', 'lint', target],
+    { stdio: 'inherit' },
+  );
+  process.exit(result.status ?? 0);
+}
+
+console.error(`deno stub: unsupported command "${args.join(' ')}"`);
+process.exit(1);

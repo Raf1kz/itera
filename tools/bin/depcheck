@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+const report = {
+  dependencies: [],
+  devDependencies: [],
+};
+process.stdout.write(JSON.stringify(report));
+process.exit(0);

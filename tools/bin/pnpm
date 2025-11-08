@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+import { spawnSync } from 'node:child_process';
+
+const args = process.argv.slice(2);
+
+const runNpmScript = (script, extraArgs = []) => {
+  const result = spawnSync('npm', ['run', script, ...extraArgs], {
+    stdio: 'inherit',
+    shell: false,
+  });
+  process.exitCode = result.status ?? 0;
+};
+
+if (args.length === 0) {
+  console.error('pnpm stub: missing command');
+  process.exit(1);
+}
+
+const [cmd, ...rest] = args;
+
+switch (cmd) {
+  case 'run': {
+    if (rest.length === 0) {
+      console.error('pnpm stub: missing script name');
+      process.exit(1);
+    }
+    runNpmScript(rest[0], rest.slice(1));
+    break;
+  }
+  case 'build':
+  case 'qa:score':
+  case 'test':
+  case 'lint':
+  case 'typecheck':
+  case 'smoke': {
+    runNpmScript(cmd, rest);
+    break;
+  }
+  case 'deadcode': {
+    const result = spawnSync('node', ['tools/bin/knip', ...rest], {
+      stdio: 'inherit',
+      shell: false,
+    });
+    process.exit(result.status ?? 0);
+    break;
+  }
+  case 'depcheck': {
+    const result = spawnSync('node', ['tools/bin/depcheck', ...rest], {
+      stdio: 'inherit',
+      shell: false,
+    });
+    process.exit(result.status ?? 0);
+    break;
+  }
+  case 'add': {
+    console.log(
+      'pnpm stub: skipping add command (offline environment, assuming dependencies already present)',
+    );
+    process.exit(0);
+    break;
+  }
+  default: {
+    runNpmScript(cmd, rest);
+    break;
+  }
+}

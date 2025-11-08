@@ -1,0 +1,142 @@
+{
+  "app": {
+    "name": "Itera",
+    "tagline": "Compañero de Estudio Impulsado por IA"
+  },
+  "nav": {
+    "generate": "Generar",
+    "flashcards": "Tarjetas",
+    "summaries": "Resúmenes",
+    "notebook": "Cuaderno",
+    "dashboard": "Panel",
+    "study": "Estudiar",
+    "soon": "Próximamente",
+    "expandSidebar": "Expandir barra lateral",
+    "collapseSidebar": "Contraer barra lateral"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signedIn": "Sesión iniciada",
+    "manageAccount": "Gestionar cuenta",
+    "saveProgress": "Guardar progreso y sincronizar en todos lados"
+  },
+  "common": {
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "success": "Éxito",
+    "error": "Error",
+    "retry": "Reintentar",
+    "backToDecks": "Volver a Mazos",
+    "backToSummaries": "Volver a Resúmenes",
+    "getStarted": "Comenzar"
+  },
+  "generate": {
+    "title": "Generar Contenido",
+    "subtitle": "Tarjetas y resúmenes impulsados por IA",
+    "deckNameLabel": "Nombre del Mazo",
+    "deckNamePlaceholder": "ej: Biología 101",
+    "optionsTitle": "Opciones",
+    "targetCards": "Número de Tarjetas",
+    "generateSummary": "Generar Resumen",
+    "detailLevel": "Nivel de Detalle",
+    "brief": "Breve",
+    "standard": "Estándar",
+    "comprehensive": "Completo",
+    "inputMethods": "Elija su método de entrada",
+    "pasteText": "Pegar Texto",
+    "uploadFiles": "Subir Archivos",
+    "enterUrl": "Ingresar URL",
+    "textPlaceholder": "Pegue sus notas de estudio aquí...",
+    "urlPlaceholder": "https://ejemplo.com/articulo",
+    "generateButton": "Generar",
+    "generating": "Generando..."
+  },
+  "decks": {
+    "title": "Tarjetas",
+    "subtitle": "tarjetas organizadas en mazos",
+    "card": "tarjeta",
+    "cards": "tarjetas",
+    "allCards": "Todas las Tarjetas",
+    "studyAll": "Estudiar Todo",
+    "studyDeck": "Estudiar",
+    "emptyTitle": "No hay tarjetas",
+    "emptyDescription": "Genere sus primeras tarjetas subiendo notas o escribiendo contenido. Nuestra IA creará materiales de estudio poderosos para ayudarle a aprender.",
+    "emptyAction": "Generar Tarjetas",
+    "select": "Seleccionar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "selected": "Seleccionado",
+    "deleteConfirm": "¿Está seguro de que desea eliminar esta tarjeta?",
+    "cardDeleted": "Tarjeta eliminada exitosamente"
+  },
+  "flashcardStudy": {
+    "card": "Tarjeta",
+    "of": "de",
+    "finalCard": "¡Última tarjeta!",
+    "known": "conocidas",
+    "learning": "aprendiendo",
+    "flipHint": "Haga clic o presione Espacio para revelar",
+    "flipBackHint": "Haga clic para ver la pregunta de nuevo",
+    "reviewAgain": "Revisar de Nuevo",
+    "gotIt": "Entendido",
+    "keyboardHints": "Use",
+    "toFlip": "para voltear",
+    "toNavigate": "para navegar",
+    "noCards": "No hay tarjetas disponibles",
+    "cardNotFound": "Tarjeta no encontrada"
+  },
+  "deckCompletion": {
+    "title": "¡Mazo Completado!",
+    "subtitle": "Excelente trabajo al terminar esta sesión de estudio",
+    "totalCards": "Tarjetas",
+    "mastered": "Dominadas",
+    "accuracy": "Precisión",
+    "highAchiever": "Alto Rendimiento",
+    "accuracyBadge": "de precisión!",
+    "backToFlashcards": "Volver a Tarjetas",
+    "tip": "Revise de nuevo mañana para fortalecer su memoria"
+  },
+  "summaries": {
+    "title": "Resúmenes",
+    "subtitle": "resúmenes generados por IA",
+    "summary": "resumen",
+    "summaries_plural": "resúmenes",
+    "words": "palabras",
+    "emptyTitle": "No hay resúmenes",
+    "emptyDescription": "Genere su primer resumen subiendo notas. Nuestra IA creará una visión general concisa para ayudarle a revisar los conceptos clave rápidamente.",
+    "emptyAction": "Generar Contenido"
+  },
+  "toast": {
+    "studyMaterialsSaved": "¡Materiales de estudio guardados con éxito!",
+    "error": "Ocurrió un error",
+    "tryAgain": "Por favor, inténtelo de nuevo"
+  },
+  "fileUpload": {
+    "dropFiles": "Suelte archivos aquí o haga clic para explorar",
+    "supportedFormats": "Formatos: PDF, DOCX, TXT",
+    "maxSize": "Máx 10MB por archivo",
+    "extracting": "Extrayendo...",
+    "ready": "Listo",
+    "failed": "Falló",
+    "processing": "Procesando archivos..."
+  },
+  "welcome": {
+    "title": "Bienvenido a Itera",
+    "subtitle": "Transforme sus notas en herramientas de aprendizaje poderosas",
+    "feature1Title": "Tarjetas Inteligentes",
+    "feature1Description": "Tarjetas generadas por IA con repetición espaciada",
+    "feature2Title": "Resúmenes Completos",
+    "feature2Description": "Visiones generales en markdown completas",
+    "feature3Title": "Multi-Formato",
+    "feature3Description": "Procese PDFs, docs, URLs y texto",
+    "getStarted": "Comenzar"
+  }
+}

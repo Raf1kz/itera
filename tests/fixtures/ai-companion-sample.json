@@ -1,0 +1,51 @@
+{
+  "deck": [
+    {
+      "id": "card-1",
+      "question": "What is the primary role of mitochondria?",
+      "answer": "They generate ATP through cellular respiration.",
+      "type": "Définition",
+      "category": "Biology"
+    },
+    {
+      "id": "card-2",
+      "question": "Which molecule carries energy released from glucose breakdown?",
+      "answer": "ATP acts as the primary energy carrier.",
+      "type": "Définition inversée",
+      "category": "Biology"
+    }
+  ],
+  "fsrs": [
+    [
+      "card-1",
+      {
+        "id": "card-1",
+        "stability": 1.2,
+        "difficulty": 5,
+        "elapsedDays": 0,
+        "scheduledDays": 0,
+        "reps": 2,
+        "lapses": 1,
+        "state": "review",
+        "lastReview": "2025-10-20T10:00:00.000Z",
+        "due": "2025-10-21T10:00:00.000Z"
+      }
+    ],
+    [
+      "card-2",
+      {
+        "id": "card-2",
+        "stability": 0.8,
+        "difficulty": 6,
+        "elapsedDays": 0,
+        "scheduledDays": 0,
+        "reps": 1,
+        "lapses": 0,
+        "state": "learning",
+        "lastReview": "2025-10-20T10:00:00.000Z",
+        "due": "2025-10-21T10:00:00.000Z"
+      }
+    ]
+  ],
+  "userQuery": "Focus on energy conversion"
+}
