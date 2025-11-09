@@ -180,6 +180,28 @@ Update Clerk allowed origins to include your custom domain.
 
 ## Troubleshooting
 
+### Blank White Page on Deployment
+
+**Issue**: Vercel deployment succeeds but shows a blank white page with no content
+
+**Root Cause**: Missing environment variables (`VITE_CLERK_PUBLISHABLE_KEY`, `VITE_SUPABASE_URL`, or `VITE_SUPABASE_ANON_KEY`) in Vercel dashboard
+
+**Solution**:
+1. Go to Vercel Dashboard → **Settings → Environment Variables**
+2. Verify ALL required `VITE_*` variables are set:
+   - `VITE_CLERK_PUBLISHABLE_KEY` (required - app won't render without it)
+   - `VITE_SUPABASE_URL` (required for database access)
+   - `VITE_SUPABASE_ANON_KEY` (required for database access)
+   - `VITE_SUPABASE_FUNCTION_URL` (required for edge functions)
+   - `VITE_ADMIN_USER_IDS` (optional - only for admin features)
+3. After adding variables, click **Redeploy** in Vercel Deployments tab
+4. **Important**: Environment variables are embedded at build time, so redeployment is required
+
+**How to verify**:
+- Open browser DevTools → Console on deployed site
+- If you see "Clerk configuration required" screen instead of blank page, env vars are working
+- If blank page persists, check Console for JavaScript errors
+
 ### Build Fails
 
 **Issue**: `npm run build` fails with TypeScript errors
