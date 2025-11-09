@@ -342,25 +342,24 @@ async function handleRequest(req: Request, ctx: { requestId: string }): Promise<
           try {
             const text = await extractFile(file.name, buffer);
             extractedTexts.push(text);
-              console.info('file_extracted', {
-                requestId: ctx.requestId,
-                filename: file.name,
-                size: buffer.byteLength,
-                charCount: text.length,
-              });
-            } catch (extractError) {
-              console.error('file_extraction_failed', {
-                requestId: ctx.requestId,
-                filename: file.name,
-                error: extractError instanceof Error ? extractError.message : String(extractError),
-              });
-              return errorResponse(422, {
-                code: 'file_extraction_failed',
-                error: `Failed to extract text from ${file.name}`,
-                detail: extractError instanceof Error ? extractError.message : String(extractError),
-                requestId: ctx.requestId,
-              });
-            }
+            console.info('file_extracted', {
+              requestId: ctx.requestId,
+              filename: file.name,
+              size: buffer.byteLength,
+              charCount: text.length,
+            });
+          } catch (extractError) {
+            console.error('file_extraction_failed', {
+              requestId: ctx.requestId,
+              filename: file.name,
+              error: extractError instanceof Error ? extractError.message : String(extractError),
+            });
+            return errorResponse(422, {
+              code: 'file_extraction_failed',
+              error: `Failed to extract text from ${file.name}`,
+              detail: extractError instanceof Error ? extractError.message : String(extractError),
+              requestId: ctx.requestId,
+            });
           }
         }
 
